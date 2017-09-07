@@ -1,0 +1,17 @@
+{
+  "name": "mqtt2nats",
+  "version": "1.0.0",
+  "description": "Moves messages from MQTT topics to NATS STreaming subject.",
+  "main": "mqtt2nats.js",
+  "dependencies": {
+    "colors": "^1.1.2",
+    "mqtt": "^2.9.0",
+    "node-nats-streaming": "0.0.25"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Evgeny Pervushin",
+  "license": "MIT"
+}
