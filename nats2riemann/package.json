@@ -1,0 +1,17 @@
+{
+  "name": "nats2riemann",
+  "version": "1.0.0",
+  "description": "Moving messages from NATS Streaming to riemann",
+  "main": "nats2riemann.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "colors": "^1.1.2",
+    "mqtt": "^2.11.0",
+    "node-nats-streaming": "0.0.x",
+    "riemann": "^1.0.1"
+  },
+  "author": "Dmitry Dorofeev",
+  "license": "MIT"
+}
