@@ -10,4 +10,10 @@ cd mqtt2nats
 npm install
 ```
 
+## How to run
+
+```
+node mqtt2nats.js
+```
+
 ## License MIT
