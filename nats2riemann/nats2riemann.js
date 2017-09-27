@@ -13,7 +13,6 @@ function createRiemannConnection() {
     riemannClient.on('connect', () => {
       console.log('Riemann - connected');
       resolve(riemannClient);
-      // client.publish('presence', 'Hello mqtt');
     });
 
   });
@@ -22,8 +21,7 @@ function createRiemannConnection() {
 
 function createNatsConnection() {
   return new Promise((resolve, reject) => {
-    var srv = 'nats://192.168.103.7:4222';
-    srv = 'nats://localhost:4222'
+    var srv = 'nats://localhost:4222'
     var server = natsNodeStreaming.connect('test-cluster', 'thingenix-riemann-pusher', srv);
     server.on('connect', function () {
       console.log('NATS - connected');
@@ -44,6 +42,7 @@ Promise.all([createRiemannConnection(), createNatsConnection()])
   var i = 0;
   natsSubscription.on('message', (msg) => {
     // message is Buffer
+
     if (i++ % 50000 == 0) {
       console.log("Got from Nats".underline.blue, i, "messages".underline.blue);
       console.log(msg.getData());
@@ -61,8 +60,7 @@ Promise.all([createRiemannConnection(), createNatsConnection()])
           time: d.getTime() / 1000,
           metric: message["items"][a],
           attributes: [{key:"longitude", value: message["loc"][0]}, {key:"latitude", value: message["loc"][1]},{key:"context", value: message["context"]}], //custom fields
-          //tags: ['nonblocking']
-          ttl: 100000
+          ttl: 10
         }), riemannConnection.tcp);
     }
   });
