@@ -1,4 +1,4 @@
-#  IoT, CEP, storage and NATS in between. Part I.
+#  IoT, CEP, storage and NATS in between. Part 1 of 3.
 
 ## Intro
 
