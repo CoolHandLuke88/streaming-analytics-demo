@@ -49,10 +49,11 @@ Promise.all([createRiemannConnection(), createNatsConnection()])
     }
 
     var message = JSON.parse(msg.getData());
-    for (a in message["items"]) {
-      if ( message["timestamp"] === undefined ) {
+    if ( message["timestamp"] === undefined ) {
          continue;
-      }
+    }
+
+    for (a in message["items"]) {
       var d = new Date(message["timestamp"]);
       riemannConnection.send(riemannConnection.Event({
           host: message["_id"],

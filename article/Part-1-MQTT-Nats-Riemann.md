@@ -196,10 +196,11 @@ Promise.all([createRiemannConnection(), createNatsConnection()])
     }
 
     var message = JSON.parse(msg.getData());
-    for (a in message["items"]) {
-      if ( message["timestamp"] === undefined ) {
+    if ( message["timestamp"] === undefined ) {
          continue;
-      }
+    }
+      
+    for (a in message["items"]) {
       var d = new Date(message["timestamp"]);
       riemannConnection.send(riemannConnection.Event({
           host: message["_id"],
@@ -218,9 +219,46 @@ Promise.all([createRiemannConnection(), createNatsConnection()])
 });
 ```
 
+And here is sample MQTT message in JSON format:
+
+```JSON
+{
+ "_id":"594d186e51b3bc4eb0abafd9",
+ "context":"594e7bfb463aee1301da2d6b",
+ "loc"[45.13887627405175,50.75920624235248],
+ "timestamp":"2017-09-30T12:50:17.765Z",
+ "items":{
+	"APFluid":"27.1245",
+	"AvTFluid":"35.4900",
+	"AvQvFluid":"309.1259",
+	"AvQmOil":"254.4323",
+	"AvQvnGas":"27035.2344",
+	"Adfld":"833.0001",
+	"Adgas":"0.8990",
+	"AvWater":"0.0000",
+	"rssi":-107,
+	"snr":7.2
+	}
+}
 ```
-(defn moving-average [num-seconds & children]
-  (moving-event-window num-seconds (apply smap folds/mean children)))
+
+Our IoT provider has quite smart sensors, so each MQTT event contains GPS coordinates in the `loc` array. Also, each sensor collects several metrics at once, so `items` array list all collected metrics with their codes and values.
+
+To simplify the following stream processing we make flat structure out of MQTT messages, so each metric value from `items` array becomes separate Riemann message and looks like this:
+
+```
+{
+host: "594d186e51b3bc4eb0abafd9",
+service: "APFluid",
+time: 1506775817.765,
+metric: 27.1245,
+attributes: [
+	{key:"longitude", value:45.13887627405175}, 
+	{key:"latitude", value: 50.75920624235248},
+	{key:"context", value: "594e7bfb463aee1301da2d6b"}
+],
+ttl: 100000
+}
 ```
 
 Coming up in my next post in this series, I will look at:
