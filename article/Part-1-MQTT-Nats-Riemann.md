@@ -208,7 +208,6 @@ Promise.all([createRiemannConnection(), createNatsConnection()])
           time: d.getTime() / 1000,
           metric: message["items"][a],
           attributes: [{key:"longitude", value: message["loc"][0]}, {key:"latitude", value: message["loc"][1]},{key:"context", value: message["context"]}], //custom fields
-          //tags: ['nonblocking']
           ttl: 100000
         }), riemannConnection.tcp);
     }
@@ -248,16 +247,16 @@ To simplify the following stream processing we make flat structure out of MQTT m
 
 ```
 {
-host: "594d186e51b3bc4eb0abafd9",
-service: "APFluid",
-time: 1506775817.765,
-metric: 27.1245,
-attributes: [
-	{key:"longitude", value:45.13887627405175}, 
-	{key:"latitude", value: 50.75920624235248},
-	{key:"context", value: "594e7bfb463aee1301da2d6b"}
+"host: "594d186e51b3bc4eb0abafd9",
+"service: "APFluid",
+"time: 1506775817.765,
+"metric: 27.1245,
+"attributes: [
+	{"key":"longitude", "value":45.13887627405175}, 
+	{"key":"latitude", "value":50.75920624235248},
+	{"key":"context", "value":"594e7bfb463aee1301da2d6b"}
 ],
-ttl: 100000
+"ttl": 100000
 }
 ```
 
